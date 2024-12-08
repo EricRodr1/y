@@ -10,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
- 
 public class PlayGame extends javax.swing.JFrame {
 
     private VFondo fondo;
@@ -18,72 +17,98 @@ public class PlayGame extends javax.swing.JFrame {
     private boolean caraUp = false;
     private ImageIcon im1;
     private ImageIcon im2;
-    private JButton[] pbtn = new JButton[2];
+    private JButton pbtn1;
+    private JButton pbtn2;
+     
     private boolean primerc = false;
-    private int puntaje = 0;
-    
+    private int puntaje1, puntaje2 = 0;
+    String nombre2; 
+    String nombre1;
+     private int turno = 0;
+     
+
+     
     public PlayGame() {
         initComponents();
+          nombre2 = JOptionPane.showInputDialog(this, "Favor ingrese nombre del primer jugador; ");
+          nombre1 = JOptionPane.showInputDialog(this, "Favor ingrese nombre del segundo jugador; ");
+          if(nombre1.equals(nombre2)){
+           JOptionPane.showMessageDialog(null, "Nombre invalido", "Los nombres deben ser diferentes", JOptionPane.ERROR_MESSAGE);  
+           System.exit(0);
+          }
         
         fondo = new VFondo(getWidth(), getHeight());
         add(fondo, BorderLayout.CENTER);
         setCards();
-    }       
-    
+    }
+
     private void setCards() {
         int[] numbers = log.barajear();
-        
-        btnC1.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[1]+".jpg")));
-        btnC2.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[2]+".jpg")));
-        btnC3.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[3]+".jpg")));
-        btnC4.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[4]+".jpg")));
-        btnC5.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[5]+".jpg")));
-        btnC6.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[6]+".jpg")));
-        btnC7.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[7]+".jpg")));
-        btnC8.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[8]+".jpg")));
-        btnC9.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[9]+".jpg")));
-        btnC10.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[10]+".jpg")));
-        btnC11.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[11]+".jpg")));
-        btnC12.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[12]+".jpg")));
-        btnC13.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[13]+".jpg")));
-        btnC14.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[14]+".jpg")));
-        btnC15.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[15]+".jpg")));
-        btnC16.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0"+numbers[0]+".jpg")));
-    }    
-    
+
+        btnC1.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[1] + ".jpg")));
+        btnC2.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[2] + ".jpg")));
+        btnC3.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[3] + ".jpg")));
+        btnC4.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[4] + ".jpg")));
+        btnC5.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[5] + ".jpg")));
+        btnC6.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[6] + ".jpg")));
+        btnC7.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[7] + ".jpg")));
+        btnC8.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[8] + ".jpg")));
+        btnC9.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[9] + ".jpg")));
+        btnC10.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[10] + ".jpg")));
+        btnC11.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[11] + ".jpg")));
+        btnC12.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[12] + ".jpg")));
+        btnC13.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[13] + ".jpg")));
+        btnC14.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[14] + ".jpg")));
+        btnC15.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[15] + ".jpg")));
+        btnC16.setDisabledIcon(new ImageIcon(getClass().getResource("../imagenes/0" + numbers[0] + ".jpg")));
+    }
+
     private void btnEnabled(JButton btn) { //Metodo que habilita o deshabilita os botones, por si ya ha sido volteada la carta
-        
-        if(!caraUp) {
+
+        if (!caraUp) {
             btn.setEnabled(false);
             im1 = (ImageIcon) btn.getDisabledIcon();
-            pbtn[0] = btn;
+            pbtn1 = btn;
             caraUp = true;
             primerc = false;
-        }
-        else {
+        } else {
             btn.setEnabled(false);
             im2 = (ImageIcon) btn.getDisabledIcon();
-            pbtn[1] = btn;
+            pbtn2 = btn;
             primerc = true;
-            puntaje += 20;
+            if(turno ==0){
+               puntaje1 += 20;
+            } else {
+                puntaje2 += 20;
+            }
+            compare();
+            turno = 1 - turno;  
+            JOptionPane.showMessageDialog(this, "Turno de " + (turno == 0 ? nombre1 : nombre2)); 
+            
+           
             pregwin();
         }
     }
-    
+
     private void compare() {
-        if(caraUp && primerc) {
-            
-            if(im1.getDescription().compareTo(im2.getDescription()) != 0) {
-                pbtn[0].setEnabled(true);
-                pbtn[1].setEnabled(true);
-                if(puntaje > 10 ) puntaje -= 10;
+        if (caraUp && primerc) {
+
+            if (im1.getDescription().compareTo(im2.getDescription()) != 0) {
+                pbtn1.setEnabled(true);
+                pbtn2.setEnabled(true);
+                   if (turno == 0 && puntaje1 > 10) {
+                    puntaje1 -= 10;
+                } else if (turno == 1 && puntaje2 > 10) {
+                    puntaje2 -= 10; 
+                 
+                }
             }
             caraUp = false;
         }
     }
-    
+
     private void reiniciar() {
-        
+
         btnC1.setEnabled(true);
         btnC2.setEnabled(true);
         btnC3.setEnabled(true);
@@ -100,20 +125,30 @@ public class PlayGame extends javax.swing.JFrame {
         btnC14.setEnabled(true);
         btnC15.setEnabled(true);
         btnC16.setEnabled(true);
-        
+
         primerc = false;
         caraUp = false;
-        puntaje = 0;
+         
     }
     
+
     private void pregwin() {
-        if(!btnC1.isEnabled() && !btnC2.isEnabled() && !btnC3.isEnabled() && !btnC4.isEnabled() && !btnC5.isEnabled() && !btnC6.isEnabled() && 
-                !btnC7.isEnabled() && !btnC8.isEnabled() && !btnC9.isEnabled() && !btnC10.isEnabled() && !btnC11.isEnabled() && 
-                !btnC12.isEnabled() && !btnC13.isEnabled() && !btnC14.isEnabled() && !btnC15.isEnabled() && !btnC16.isEnabled()) {
-            JOptionPane.showMessageDialog(this, " Juego Finalizado","Gano", JOptionPane.INFORMATION_MESSAGE);
+        if (!btnC1.isEnabled() && !btnC2.isEnabled() && !btnC3.isEnabled() && !btnC4.isEnabled() && !btnC5.isEnabled() && !btnC6.isEnabled()
+                && !btnC7.isEnabled() && !btnC8.isEnabled() && !btnC9.isEnabled() && !btnC10.isEnabled() && !btnC11.isEnabled()
+                && !btnC12.isEnabled() && !btnC13.isEnabled() && !btnC14.isEnabled() && !btnC15.isEnabled() && !btnC16.isEnabled()) {
+            String mensajegan = "";
+            if (puntaje1 > puntaje2) {
+                mensajegan = "Ganador: " + nombre1 + " por " + (puntaje1 - puntaje2) + " puntos.";
+            } else if (puntaje2 > puntaje1) {
+                mensajegan = "Ganador: " + nombre2 + " por " + (puntaje2 - puntaje1) + " puntos.";
+            } else {
+                mensajegan = "Empate entre " + nombre1 + " y " + nombre2 + ".";
+            }
+
+            JOptionPane.showMessageDialog(this, " Juego Finalizado", "Gano", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -682,7 +717,6 @@ public class PlayGame extends javax.swing.JFrame {
         reiniciar();
     }//GEN-LAST:event_btnReiniciarActionPerformed
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
