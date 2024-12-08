@@ -8,10 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Dark
- */
+ 
 public class VFondo extends javax.swing.JPanel {
 
     /**

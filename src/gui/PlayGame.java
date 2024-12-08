@@ -10,10 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Dark
- */
+ 
 public class PlayGame extends javax.swing.JFrame {
 
     private VFondo fondo;
@@ -113,7 +110,7 @@ public class PlayGame extends javax.swing.JFrame {
         if(!btnC1.isEnabled() && !btnC2.isEnabled() && !btnC3.isEnabled() && !btnC4.isEnabled() && !btnC5.isEnabled() && !btnC6.isEnabled() && 
                 !btnC7.isEnabled() && !btnC8.isEnabled() && !btnC9.isEnabled() && !btnC10.isEnabled() && !btnC11.isEnabled() && 
                 !btnC12.isEnabled() && !btnC13.isEnabled() && !btnC14.isEnabled() && !btnC15.isEnabled() && !btnC16.isEnabled()) {
-            JOptionPane.showMessageDialog(this, "Felicidades, usted ha ganado. Su puntaje es: "+puntaje, "Win!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Juego Finalizado","Gano", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
