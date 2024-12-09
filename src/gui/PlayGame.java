@@ -33,7 +33,7 @@ public class PlayGame extends javax.swing.JFrame {
           nombre2 = JOptionPane.showInputDialog(this, "Favor ingrese nombre del primer jugador; ");
           nombre1 = JOptionPane.showInputDialog(this, "Favor ingrese nombre del segundo jugador; ");
           if(nombre1.equals(nombre2)){
-           JOptionPane.showMessageDialog(null, "Nombre invalido", "Los nombres deben ser diferentes", JOptionPane.ERROR_MESSAGE);  
+           JOptionPane.showMessageDialog(null, "Los nombres deben ser diferentes, intente nuevamente", "Nombre invalido", JOptionPane.ERROR_MESSAGE);  
            System.exit(0);
           }
         
@@ -71,6 +71,7 @@ public class PlayGame extends javax.swing.JFrame {
             pbtn1 = btn;
             caraUp = true;
             primerc = false;
+            
         } else {
             btn.setEnabled(false);
             im2 = (ImageIcon) btn.getDisabledIcon();
@@ -83,6 +84,9 @@ public class PlayGame extends javax.swing.JFrame {
             }
             compare();
             turno = 1 - turno;  
+            
+           
+            
             JOptionPane.showMessageDialog(this, "Turno de " + (turno == 0 ? nombre1 : nombre2)); 
             
            
@@ -139,13 +143,16 @@ public class PlayGame extends javax.swing.JFrame {
             String mensajegan = "";
             if (puntaje1 > puntaje2) {
                 mensajegan = "Ganador: " + nombre1 + " por " + (puntaje1 - puntaje2) + " puntos.";
+                JOptionPane.showMessageDialog(null,mensajegan);
             } else if (puntaje2 > puntaje1) {
                 mensajegan = "Ganador: " + nombre2 + " por " + (puntaje2 - puntaje1) + " puntos.";
+                JOptionPane.showInputDialog(mensajegan);
             } else {
                 mensajegan = "Empate entre " + nombre1 + " y " + nombre2 + ".";
+                JOptionPane.showInputDialog(mensajegan);
             }
 
-            JOptionPane.showMessageDialog(this, " Juego Finalizado", "Gano", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Juego Finalizado", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -569,10 +576,6 @@ public class PlayGame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC1ActionPerformed
-        btnEnabled(btnC1);
-    }//GEN-LAST:event_btnC1ActionPerformed
-
     private void btnC2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC2ActionPerformed
         btnEnabled(btnC2);
     }//GEN-LAST:event_btnC2ActionPerformed
@@ -632,11 +635,6 @@ public class PlayGame extends javax.swing.JFrame {
     private void btnC16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC16ActionPerformed
         btnEnabled(btnC16);
     }//GEN-LAST:event_btnC16ActionPerformed
-
-    private void btnC1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnC1MouseExited
-        // TODO add your handling code here:
-        compare();
-    }//GEN-LAST:event_btnC1MouseExited
 
     private void btnC2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnC2MouseExited
         // TODO add your handling code here:
@@ -716,6 +714,15 @@ public class PlayGame extends javax.swing.JFrame {
     private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
         reiniciar();
     }//GEN-LAST:event_btnReiniciarActionPerformed
+
+    private void btnC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnC1ActionPerformed
+        btnEnabled(btnC1);
+    }//GEN-LAST:event_btnC1ActionPerformed
+
+    private void btnC1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnC1MouseExited
+        // TODO add your handling code here:
+        compare();
+    }//GEN-LAST:event_btnC1MouseExited
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
